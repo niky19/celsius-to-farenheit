@@ -1,6 +1,14 @@
-scene.setBackgroundImage(assets.image`
-    mybg
-`)
+function getUserChoice(): number {
+    game.showLongText("Welcome to the Celsius/Farenheit Convertor!", DialogLayout.Bottom)
+    let choice = game.askForNumber(" Press 1 -> C to F | Press 2 -> F to C", 1)
+    return choice
+}
+
+function getUserTemp(): number {
+    let temp = game.askForNumber("Write the temperature:", 5)
+    return temp
+}
+
 function toFar(temp: number): number {
     let farConversion = temp * 9 / 5 + 32
     let roundedFar = Math.roundWithPrecision(farConversion, 2)
@@ -13,18 +21,16 @@ function toCel(temp: number): number {
     return roundedCel
 }
 
-function menu() {
-    game.showLongText("Welcome to the Celsius/Farenheit Convertor!", DialogLayout.Bottom)
-    let userChoice = game.askForNumber(" Press 1 -> C to F | Press 2 -> F to C", 1)
-    let userTemp = game.askForNumber("Write the temperature:", 5)
-    if (userChoice == 1) {
-        game.showLongText("Result: " + ("" + toFar(userTemp)), DialogLayout.Bottom)
-    } else if (userChoice == 2) {
-        game.showLongText("Result: " + ("" + toCel(userTemp)), DialogLayout.Bottom)
+function menu(choice: number, temp: number) {
+    if (choice == 1) {
+        game.showLongText("Result: " + ("" + toFar(temp)), DialogLayout.Bottom)
+    } else if (choice == 2) {
+        game.showLongText("Result: " + ("" + toCel(temp)), DialogLayout.Bottom)
     } else {
         game.showLongText("Invalid choice. Please try again.", DialogLayout.Bottom)
     }
     
 }
 
-menu()
+scene.setBackgroundImage(assets.image`mybg`)
+menu(getUserChoice(), getUserTemp())
